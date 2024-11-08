@@ -9,7 +9,7 @@ const isDocker = true;
 const headless = true;
 // 重試次數上限
 const tryCountMax = 3;
-// 重試次數
+// 重試次數0
 let tryCount = 0;
 
 function delay(time) {
