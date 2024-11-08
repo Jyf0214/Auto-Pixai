@@ -1,10 +1,13 @@
 name: Auto-Pixai
 
+# 定义触发条件：push 到 main 分支、pull request 到 main 分支、以及每日定时任务
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  schedule:
+    - cron: '0 1 * * *'  # 每天 UTC 时间凌晨 1 点运行
 
 jobs:
   build:
@@ -22,7 +25,12 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Build
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Run Puppeteer Script
+      env:
+        LOGINNAME: ${{ secrets.LOGINNAME }}
+        PASSWORD: ${{ secrets.PASSWORD }}
       run: |
-        npm install
         npm start
